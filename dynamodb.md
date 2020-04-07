@@ -46,7 +46,6 @@ __O DynamoDB é a solução No-SQL da AWS. É um serviço rápido e flexível pa
 	- O acesso pode ser feito via chaves temporárias obtidas por um IAM Role
 	- Pode ser criado um usuário com permissões específicas para acesso e criação de tabelas 
 
-
 ## Indíces
 
 - 2 tipos de indices são suportados:
@@ -64,6 +63,28 @@ __O DynamoDB é a solução No-SQL da AWS. É um serviço rápido e flexível pa
 
 ## Scan vs Query API Call
 
+- Query
+	- Encontra um item numa tabela, baseado na primary key.
+	- É possível usar uma _sort key_ para refinar a busca.
+	- Por padrão, a query retorna todos os atributos, mas pode-se usar o parâmetro ProjectionExpression se quiser especificar os atributos que deseja retornar.
+	- Os resultados são ordenados pela _sort key_.
+		- Ordem númerica - em ordem ascendente.
+		- Valor do código ASCII.
+		- A ordem pode ser invertida setando o parâmetro __ScanIndexForward__ para _false_.
+	- Por padrão as Queries são do tipo __Eventually Consistent__.
+		- É possível forçar a query para ser do tipo __Strongly Consistent__ setando isso explicitamente. 
+
+- Scan
+	- Operação que examina cada item da tabela.
+	- Returna todos os atributos.
+		- Pode-se usar o parâmetro ProjectionExpression se quiser especificar os atributos que deseja retornar.
+
+- Diferenças e melhorias
+	- Query é mais eficiente que o Scan.
+	- Reduzir o impacto de uma Query ou Scan diminuindo o tamanho da página, de forma que ela necessite de menos operações de leitura.
+	- Usar Scan em paralelo no lugar de executar sequecialmente.
+	- Projetar tabelas que possam usar mais operações como Query, Get e BatchGetItems.
+	
 ## Dynamo DB Provisioned Throughput
 
 - É medido em Capacity Units.
@@ -80,7 +101,9 @@ Strongly C
 - Bom para um cenário em que não se sabe o nível de carga.
 - Pagamento com base no que for usado (pay per request).
  
-[incluir imagem do comparativo]()
+<div style="text-align:center; display:block;">
+    <img src="assets/dynamodb_1.png">
+</div>
 
 ## DynamoDB Accelerator (DAX)
 
@@ -129,11 +152,22 @@ Estratégias de Caching
 		- Falhas não são fatais, um novo nó vazio vai apenas ter um monte de dados não cacheados anteriormente.
 	- Desvantagens:
 		- Requisição inicial bate na base de dados para escrever dados no cache.
-		- Stale data: 
+		- Dados desatualizados (Stale data) 
+	- TTL
+		- Especifica o tempo de vida da informação (em segundos) para evitar que informação desatualizada seja mantida no cache.
+		- O Lazy Loading trata uma informação expirada como um _cache miss_, assim força a aplicação ir buscar a informação na base de dados, gravando-a no cache com um novo TTL.
+		- Não elimina _stale data_, mas ajuda a evitá-los.
 
-
-
-- Write-Through 
+- Write-Through
+	- Adiciona ou atualiza dados no cache sempre que um dado é escrito na base de dados.
+	- Vantagens:
+		- Dados no cache nunca desatualizam.
+		- Usuários são mais tolerantes a maior latência quando atualizando do que quando consultando dados.
+	- Desvantagems:
+		- Toda operação de escrita consiste numa escrita no banco e outra no cache.
+		- Em caso de falha, dados estarão faltando no cache até que eles sejam inseridos ou atualizados na base de dados.
+			- Pode ser mitigado usando Lazy Loading junto com Write-Through.
+		- Representa desperdício de recursos se a maioria dos dados nunca são lidos.
 
 ## DynamoDB Transactions
 
@@ -142,6 +176,16 @@ Estratégias de Caching
 - Verifica condições de pré requisitos antes de escrever na tabela.
 
 ## DynamoDB TTL
+- Define tempo de expiração para os dados.
+- Dados expirados são marcados para deleção. (48h para deleção)
+- É bom para remover dados irrelevantes ou desatualizados:
+	- Dados de sessão, logs de eventos e dados temporários.
+- Reduz os custo já que elimina automaticamente dados irrelevantes.
+
+Exemplo TTL em Session Data:
+<div style="text-align:center; display:block;">
+    <img src="assets/img2.png">
+</div>
 
 ## DynamoDB Streams
 
