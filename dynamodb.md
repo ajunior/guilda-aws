@@ -92,7 +92,20 @@ __O DynamoDB é a solução No-SQL da AWS. É um serviço rápido e flexível pa
 - 1 x Write Capacity Unit = 1 x 1KB de escrita por segundo.
 - 1 x Read Capacity Unit = 1 x Strongly Consistent Read de 4KB por segundo; ou 2 x Eventually Consistent Reads de 4KB por segundo (Default).
 
-Strongly C
+<div style="text-align:center; display:block;">
+    <img src="assets/dynamodb_2.png">
+</div>
+
+Strongly Consistent Read Calculation:
+<div style="text-align:center; display:block;">
+    <img src="assets/dynamodb_3.png">
+</div>
+
+Write Calculation
+<div style="text-align:center; display:block;">
+    <img src="assets/dynamodb_4.png">
+</div>
+
 ## DynamoDB On Demand Capacity
 
 - Cobrança se aplica a leitura, escrita e armazenamento dos dados.
