@@ -103,7 +103,7 @@ Strongly Consistent Read Calculation:
 
 Write Calculation
 <div style="text-align:center; display:block;">
-    <img src="assets/dynamodb_4.png">
+    <img src="assets/dynamodb_44.png">
 </div>
 
 ## DynamoDB On Demand Capacity
