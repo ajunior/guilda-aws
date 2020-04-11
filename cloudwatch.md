@@ -18,13 +18,13 @@ Os logs podem ser consultados pela API __GetMetricStatistics__ da AWS ou usando 
 
 Depende do serviço da AWS que está sendo utilizado, por padrão a maioria das métricas usa 1 (um) minutos como intervalo padrão, mas em alguns serviços isso pode variar de 3 (três) a 5 (cinco) minutos.
 
-> :bulb: __Dica de prova:__ Para as métricas customizáveis, o valor mínimo de granularidade que pode ser configurado é de 1 (um) minutos.
+> :bulb: __Dica de prova:__ Para as métricas customizáveis, o valor mínimo de granularidade que pode ser configurado é de 1 (um) minuto.
 
 ## Alarmes
 
 Pode-se criar alarmes para monitorar qualquer métrica do CloudWatch, desde a utilização de CPU de uma instância EC2 até a latência do ELB, entre outras. Um _threshold_ apropriado para a métrica deve ser configurado e o alarme é disparado, quando a métrica atinge o nível determinado, e uma ação (que também deve ser configurada) é executada. 
 
-> É bem comum o uso de alarmes para notificar o usuário quando o consumo financeiro atinge um determinado valor.
+> :point_right: É bem comum o uso de alarmes para notificar o usuário quando o consumo financeiro atinge um determinado valor.
 
 ## CloudWatch vs. CloudTrail vs. Config
 
