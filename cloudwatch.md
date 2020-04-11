@@ -24,7 +24,7 @@ Depende do serviço da AWS que está sendo utilizado, por padrão a maioria das 
 
 Pode-se criar alarmes para monitorar qualquer métrica do CloudWatch, desde a utilização de CPU de uma instância EC2 até a latência do ELB, entre outras. Um _threshold_ apropriado para a métrica deve ser configurado e o alarme é disparado, quando a métrica atinge o nível determinado, e uma ação (que também deve ser configurada) é executada. 
 
-> :point_right: É bem comum o uso de alarmes para notificar o usuário quando o consumo financeiro atinge um determinado valor.
+> :point_right: É bem comum a configuração de alarmes para manter o usuário notificado em relação ao consumo financeiro da sua conta na AWS.
 
 ## CloudWatch vs. CloudTrail vs. Config
 
